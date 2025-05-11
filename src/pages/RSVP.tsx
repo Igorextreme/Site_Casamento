@@ -36,7 +36,7 @@ const RSVP = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbztFZcdtaMnLIGMxlMm_lMlSkVYltGIVa4gtCmgz4NX3nLJaFb2R7BEQiv9TucWGCTxTg/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyIgD9FfErHoAWxve9pd0O03YjDysnHFMiq0hnTGl3VMqQJarfh-1eURbZbcMA9OX01zw/exec", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
