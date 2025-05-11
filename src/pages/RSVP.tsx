@@ -34,16 +34,17 @@ const RSVP = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbxOnNBq_OTylFSvzZBf3DifYcb-PT-pKu5EeuMYTalfnVRrb4YCeSULYs23EFU15m2tCw/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbztFZcdtaMnLIGMxlMm_lMlSkVYltGIVa4gtCmgz4NX3nLJaFb2R7BEQiv9TucWGCTxTg/exec", {
         method: "POST",
-        mode: "cors",
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
         },
       });
+  
+      if (!response.ok) throw new Error("Erro ao enviar dados");
   
       toast({
         title: "Resposta enviada!",
@@ -59,15 +60,16 @@ const RSVP = () => {
         message: "",
       });
   
-    } catch (error) {
-      console.error("Erro ao enviar resposta:", error);
+    } catch (err) {
+      console.error(err);
       toast({
         title: "Erro",
-        description: "Não foi possível enviar sua confirmação. Tente novamente.",
+        description: "Houve um problema ao enviar sua resposta.",
       });
     }
   };
   
+
   return (
     <div className="py-12 md:py-16">
       <div className="wedding-container">
