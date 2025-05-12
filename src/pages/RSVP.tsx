@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,15 +8,17 @@ import { useToast } from "@/components/ui/use-toast";
 const RSVP = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
+    tipoConvite: "Individual",
     name: "",
-    email: "",
     phone: "",
-    attendance: "yes",
-    guests: "0",
-    message: "",
+    quantidade: "",
+    integrantes: "",
+    attendance: "Sim",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -25,145 +26,158 @@ const RSVP = () => {
     });
   };
 
-  const handleRadioChange = (value: string) => {
+  const handleRadioChange = (field: string, value: string) => {
     setFormData({
       ...formData,
-      attendance: value,
+      [field]: value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
+    const data = new FormData();
+    data.append("entry.2111817451", formData.tipoConvite);
+    data.append("entry.517608033", formData.name);
+    data.append("entry.1130232256", formData.phone);
+    data.append("entry.1940540319", formData.attendance);
+
+    if (formData.tipoConvite === "Família") {
+      data.append("entry.1779383198", formData.quantidade);
+      data.append("entry.991493757", formData.integrantes);
+    }
+
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyIgD9FfErHoAWxve9pd0O03YjDysnHFMiq0hnTGl3VMqQJarfh-1eURbZbcMA9OX01zw/exec", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (!response.ok) throw new Error("Erro ao enviar dados");
-  
+      await fetch(
+        "https://docs.google.com/forms/d/e/1FAIpQLScrSxsc078ydDs8PUFKRP1zhZkw0amq2ooH6DdnlMFtVW0qVA/formResponse",
+        {
+          method: "POST",
+          mode: "no-cors",
+          body: data,
+        }
+      );
+
       toast({
         title: "Resposta enviada!",
         description: "Obrigado pela sua confirmação.",
       });
-  
+
       setFormData({
+        tipoConvite: "Individual",
         name: "",
-        email: "",
         phone: "",
-        attendance: "yes",
-        guests: "0",
-        message: "",
+        quantidade: "",
+        integrantes: "",
+        attendance: "Sim",
       });
-  
-    } catch (err) {
-      console.error(err);
+    } catch {
       toast({
-        title: "Erro",
-        description: "Houve um problema ao enviar sua resposta.",
+        title: "Erro ao enviar",
+        description: "Verifique sua conexão e tente novamente.",
+        variant: "destructive",
       });
     }
   };
-  
 
   return (
     <div className="py-12 md:py-16">
       <div className="wedding-container">
         <h1 className="section-title">Confirme sua presença</h1>
         <p className="section-subtitle">
-          Por favor confirme sua presença até 18 de Junho de 2025
+          Por favor confirme sua presença até 08 de Junho de 2025
         </p>
 
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Nome Completo</Label>
+              <Label>Tipo de Convite</Label>
+              <RadioGroup
+                value={formData.tipoConvite}
+                onValueChange={(val) => handleRadioChange("tipoConvite", val)}
+                className="flex space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Individual" id="individual" />
+                  <Label htmlFor="individual">Individual</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Família" id="familia" />
+                  <Label htmlFor="familia">Família</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="name">Nome</Label>
               <Input
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Seu nome completo"
+                placeholder="Seu nome"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="seu.email@exemplo.com"
-                required
-              />
-            </div>
+            {formData.tipoConvite === "Família" && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="quantidade">Quantidade de pessoas</Label>
+                  <Input
+                    id="quantidade"
+                    name="quantidade"
+                    type="number"
+                    min="1"
+                    max="10"
+                    value={formData.quantidade}
+                    onChange={handleChange}
+                    placeholder="Ex: 3"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="integrantes">Nome dos integrantes</Label>
+                  <Input
+                    id="integrantes"
+                    name="integrantes"
+                    value={formData.integrantes}
+                    onChange={handleChange}
+                    placeholder="Ex: Igor e Nicole"
+                    required
+                  />
+                </div>
+              </>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="phone">Telefone</Label>
               <Input
                 id="phone"
                 name="phone"
+                type="tel"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="(00) 00000-0000"
+                placeholder="Ex: 86998004507"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Você poderá comparecer?</Label>
+              <Label>Você confirma presença?</Label>
               <RadioGroup
                 value={formData.attendance}
-                onValueChange={handleRadioChange}
+                onValueChange={(val) => handleRadioChange("attendance", val)}
                 className="flex space-x-4"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="yes" />
-                  <Label htmlFor="yes">Sim, eu vou</Label>
+                  <RadioGroupItem value="Sim" id="sim" />
+                  <Label htmlFor="sim">Sim</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="no" />
-                  <Label htmlFor="no">Infelizmente não</Label>
+                  <RadioGroupItem value="Não" id="nao" />
+                  <Label htmlFor="nao">Não</Label>
                 </div>
               </RadioGroup>
-            </div>
-
-            {formData.attendance === "yes" && (
-              <div className="space-y-2">
-                <Label htmlFor="guests">Número de acompanhantes</Label>
-                <select
-                  id="guests"
-                  name="guests"
-                  value={formData.guests}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-wedding-green focus:border-transparent"
-                  required
-                >
-                  <option value="0">Sem acompanhante</option>
-                  <option value="1">1 acompanhante</option>
-                  <option value="2">2 acompanhantes</option>
-                  <option value="3">3 acompanhantes</option>
-                </select>
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="message">Mensagem aos noivos (opcional)</Label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Escreva uma mensagem para os noivos..."
-                className="w-full border border-gray-300 rounded-md py-2 px-3 h-32 focus:outline-none focus:ring-2 focus:ring-wedding-green focus:border-transparent"
-              />
             </div>
 
             <Button type="submit" className="wedding-button w-full">
@@ -176,7 +190,7 @@ const RSVP = () => {
           <p className="text-gray-700">
             Em caso de dúvidas, entre em contato conosco: <br />
             <a href="mailto:igor.nicole@exemplo.com" className="text-wedding-green hover:underline">
-              igor.nicole@exemplo.com
+              Whatsapp: (86) 99855-3437
             </a>
           </p>
         </div>

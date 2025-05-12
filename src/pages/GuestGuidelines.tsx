@@ -10,8 +10,8 @@ const guidelines = [
   },
   {
     id: 2,
-    title: "Rosa é a cor das madrinhas",
-    description: "Para manter a harmonia visual da cerimônia, pedimos que evite usar rosa, pois é a cor das madrinhas."
+    title: "Verde é a cor das madrinhas",
+    description: "Para manter a harmonia visual da cerimônia, pedimos que evite usar Verde, pois é a cor das madrinhas."
   },
   {
     id: 3,
@@ -20,18 +20,19 @@ const guidelines = [
   },
   {
     id: 4,
-    title: "Participe da cerimônia",
-    description: "Sua presença é importante para nós durante toda a celebração. Venha celebrar conosco do início ao fim!"
+    title: "Azul e a cor das damas de honra",
+    description: "Para manter a harmonia visual da cerimônia, pedimos que evite usar azul, pois é a cor das damas de honra."
   },
   {
     id: 5,
-    title: "Aguarde a liberação da mesa de doces",
-    description: "A mesa de doces será liberada em momento específico da festa. Por favor, aguarde o anúncio."
+    title: "Participe da cerimônia",
+    description: "Sua presença é importante para nós durante toda a celebração. Venha celebrar conosco do início ao fim!"
   },
+  
   {
     id: 6,
     title: "Aproveite bastante",
-    description: "Este é um dia de celebração! Dance, converse, divirta-se e aproveite cada momento."
+    description: "Este é um dia de celebração! Divirta-se e aproveite cada momento."
   },
   {
     id: 7,
@@ -46,12 +47,17 @@ const guidelines = [
   {
     id: 9,
     title: "Não atrapalhe os fotógrafos",
-    description: "Para garantir boas fotos, pedimos que não interfira no trabalho dos fotógrafos profissionais."
+    description: "Para garantir boas fotos, pedimos que não interfira no trabalho dos fotógrafos profissionais, enviaremos todos os momentos marcantes após a cerimônia."
   },
   {
     id: 10,
     title: "Não saia sem se despedir dos noivos",
     description: "Antes de partir, por favor, venha nos dar um abraço de despedida. Queremos agradecer sua presença!"
+  },
+  {
+    id: 11,
+    title: "Desligar o celular",
+    description: "Pedimos que desligue ou coloque seu celular no modo silencioso durante a cerimônia para não atrapalhar os momentos especiais."
   }
 ];
 
