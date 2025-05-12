@@ -11,7 +11,8 @@ const RSVP = () => {
     tipoConvite: "Individual",
     name: "",
     phone: "",
-    quantidade: "",
+    adultos: "1",
+    criancas: "0",
     integrantes: "",
     attendance: "Sim",
   });
@@ -27,10 +28,19 @@ const RSVP = () => {
   };
 
   const handleRadioChange = (field: string, value: string) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
+    if (field === "tipoConvite") {
+      setFormData((prev) => ({
+        ...prev,
+        tipoConvite: value,
+        adultos: value === "Individual" ? "1" : "",
+        criancas: value === "Individual" ? "0" : "",
+      }));
+    } else {
+      setFormData({
+        ...formData,
+        [field]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,10 +51,11 @@ const RSVP = () => {
     data.append("entry.517608033", formData.name);
     data.append("entry.1130232256", formData.phone);
     data.append("entry.1940540319", formData.attendance);
+    data.append("entry.1779383198", formData.adultos); // Quantidade de adultos
+    data.append("entry.997649802", formData.criancas); // Quantidade de crianças
 
     if (formData.tipoConvite === "Família") {
-      data.append("entry.1779383198", formData.quantidade);
-      data.append("entry.991493757", formData.integrantes);
+      data.append("entry.991493757", formData.integrantes); // Nome dos integrantes
     }
 
     try {
@@ -66,7 +77,8 @@ const RSVP = () => {
         tipoConvite: "Individual",
         name: "",
         phone: "",
-        quantidade: "",
+        adultos: "1",
+        criancas: "0",
         integrantes: "",
         attendance: "Sim",
       });
@@ -122,31 +134,55 @@ const RSVP = () => {
             {formData.tipoConvite === "Família" && (
               <>
                 <div className="space-y-2">
-                  <Label htmlFor="quantidade">Quantidade de pessoas</Label>
+                  <Label htmlFor="adultos">Quantidade de adultos</Label>
                   <Input
-                    id="quantidade"
-                    name="quantidade"
+                    id="adultos"
+                    name="adultos"
                     type="number"
                     min="1"
                     max="10"
-                    value={formData.quantidade}
+                    value={formData.adultos}
                     onChange={handleChange}
-                    placeholder="Ex: 3"
                     required
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="integrantes">Nome dos integrantes</Label>
+                  <Label htmlFor="criancas">Quantidade de crianças</Label>
                   <Input
-                    id="integrantes"
-                    name="integrantes"
-                    value={formData.integrantes}
+                    id="criancas"
+                    name="criancas"
+                    type="number"
+                    min="0"
+                    max="10"
+                    value={formData.criancas}
                     onChange={handleChange}
-                    placeholder="Ex: Igor e Nicole"
                     required
                   />
                 </div>
               </>
+            )}
+
+            {/* Campos escondidos para tipo Individual */}
+            {formData.tipoConvite === "Individual" && (
+              <>
+                <input type="hidden" name="adultos" value={formData.adultos} />
+                <input type="hidden" name="criancas" value={formData.criancas} />
+              </>
+            )}
+
+            {formData.tipoConvite === "Família" && (
+              <div className="space-y-2">
+                <Label htmlFor="integrantes">Nome dos integrantes</Label>
+                <Input
+                  id="integrantes"
+                  name="integrantes"
+                  value={formData.integrantes}
+                  onChange={handleChange}
+                  placeholder="Ex: Igor, Nicole e Sofia"
+                  required
+                />
+              </div>
             )}
 
             <div className="space-y-2">

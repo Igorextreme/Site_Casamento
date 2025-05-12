@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-
+import SaveTheDate from './SaveTheDate'; 
 
 const Index = () => {
   const weddingDate = new Date("2025-06-15T00:00:00");
@@ -116,6 +116,8 @@ useEffect(() => {
     </div>
   </div>
 </div>
+
+<SaveTheDate />
 
 
       {/* About Section */}
