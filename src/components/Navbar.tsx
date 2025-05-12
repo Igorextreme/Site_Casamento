@@ -9,7 +9,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Início", path: "/" },
     { name: "Confirmar Presença", path: "/rsvp" },
-    { name: "Lista de Presentes", path: "/gifts" },
+    { name: "Presentear", path: "/gifts" },
     { name: "Manual do Convidado", path: "/guidelines" },
   ];
 
