@@ -63,50 +63,61 @@ const SaveTheDate = () => {
       </div>
 
       <div className="flex flex-row gap-4 md:gap-6">
-        {cards.map((card, i) => (
-          <div
-            key={i}
-            className="w-28 h-40 md:w-32 md:h-48 [perspective:1200px] relative"
-          >
-            <div
-              className="relative w-full h-full transition-transform duration-700"
-              style={{
-                transform: `rotateY(${angles[i]}deg)`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Frente */}
-              <div
-                className="absolute w-full h-full rounded-full overflow-hidden"
-                style={{
-                  transform: "rotateY(0deg)",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <img
-                  src={`/lovable-uploads/photo-front-${card}.jpg`}
-                  alt={`Front ${card}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+      {cards.map((card, i) => {
+  const dateParts = ["15" , "06", "25"];
 
-              {/* Verso */}
-              <div
-                className="absolute w-full h-full rounded-full overflow-hidden"
-                style={{
-                  transform: "rotateY(180deg)",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <img
-                  src={`/lovable-uploads/photo-back-${card}.jpg`}
-                  alt={`Back ${card}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
+  return (
+    <div key={i} className="flex flex-col items-center gap-2">
+      {/* Card Giratório */}
+      <div className="w-28 h-40 md:w-32 md:h-48 [perspective:1200px] relative">
+        <div
+          className="relative w-full h-full transition-transform duration-700"
+          style={{
+            transform: `rotateY(${angles[i]}deg)`,
+            transformStyle: "preserve-3d",
+          }}
+        >
+          {/* Frente */}
+          <div
+            className="absolute w-full h-full rounded-full overflow-hidden"
+            style={{
+              transform: "rotateY(0deg)",
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <img
+              src={`/lovable-uploads/photo-front-${card}.jpg`}
+              alt={`Front ${card}`}
+              className="w-full h-full object-cover"
+            />
           </div>
-        ))}
+
+          {/* Verso */}
+          <div
+            className="absolute w-full h-full rounded-full overflow-hidden"
+            style={{
+              transform: "rotateY(180deg)",
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <img
+              src={`/lovable-uploads/photo-back-${card}.jpg`}
+              alt={`Back ${card}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Parte da Data */}
+      <div className="text-center text-wedding-green font-dancing text-2xl md:text-3xl tracking-widest">
+        {dateParts[i]}
+      </div>
+    </div>
+    
+  );
+})}
+
       </div>
     </div>
   );

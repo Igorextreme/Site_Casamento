@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SaveTheDate from './SaveTheDate'; 
+import { RevealOnScroll } from "@/components/RevealOnScroll"; 
+
 
 const Index = () => {
   const weddingDate = new Date("2025-06-15T00:00:00");
@@ -32,45 +34,75 @@ useEffect(() => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Couple's Photo Background */}
-      <div 
-        className="py-20 md:py-32 bg-cover bg-center relative"
-        style={{ 
-          backgroundImage: 'url("/lovable-uploads/2c098c29-c0d3-4764-834a-b49d1792d25e.png")',
-        }}
-      >
-        {/* Overlay to darken the image and make text more readable */}
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        
-        <div className="wedding-container text-center relative z-10">
-          <div className="max-w-xl mx-auto bg-white bg-opacity-90 rounded-lg p-8 shadow-lg">
-              {/* Logo circular com borda dourada suave */}
-        <div className="mx-auto mb-8 w-32 h-32 rounded-full border-4 border-[#d4af37] flex items-center justify-center p-1 bg-white shadow-lg">
-          <img 
-            src="/lovable-uploads/9e5adae7-b59c-44be-a9a7-d77b0f35c856.png" 
-            alt="Logo Igor & Nicole" 
-            className="h-24 w-auto rounded-full"
-          />
+     
+      <div
+  className="relative bg-cover bg-center min-h-[60vh] flex items-center justify-center"
+  style={{
+    backgroundImage: 'url("/lovable-uploads/2c098c29-c0d3-4764-834a-b49d1792d25e.png")',
+  }}
+>
+  {/* Overlay escura */}
+  <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+  {/* Conteúdo da contagem */}
+  <div className="text-center text-white z-10 px-4 w-full">
+    <h2 className="font-dancing text-3xl md:text-5xl mb-4">Contagem Regressiva</h2>
+    <p className="text-lg md:text-2xl mb-6">Faltam apenas...</p>
+
+    {/* Contadores */}
+    <div className="flex justify-center flex-wrap gap-3 md:gap-6">
+      {[
+        { label: "Dias", value: timeLeft.days },
+        { label: "Horas", value: timeLeft.hours },
+        { label: "Minutos", value: timeLeft.minutes },
+        { label: "Segundos", value: timeLeft.seconds },
+      ].map((item, index) => (
+        <div
+          key={index}
+          className="bg-white bg-opacity-90 text-wedding-green rounded-xl shadow-lg px-3 py-4 md:px-5 md:py-6 w-20 md:w-28 flex flex-col items-center justify-center text-center border border-[#d4af37]"
+        >
+          <div className="text-2xl md:text-5xl font-bold font-mono tracking-wider">
+            {String(item.value).padStart(2, "0")}
+          </div>
+          <div className="text-xs md:text-base mt-2 font-semibold uppercase">
+            {item.label}
+          </div>
         </div>
-            
-            {/* Nome dos noivos */}
-    <h1 className="font-dancing text-6xl md:text-8xl text-wedding-green mb-4 animate-fade-in tracking-widest">
+      ))}
+    </div>
+  </div>
+  
+</div>
+
+  
+
+      {/* Conteúdo geral */}
+      <div
+  className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white px-4 py-16 bg-cover bg-center"
+  
+>
+  {/* Overlay escura para contraste */}
+  <div className="absolute inset-0 bg-white z-0"></div>
+
+  {/* Conteúdo acima da overlay */}
+  <div className="relative z-10 flex flex-col items-center">
+    {/* Nomes dos noivos */}
+    <h1 className="font-dancing text-5xl md:text-7xl text-wedding-green mb-4 tracking-widest drop-shadow-lg">
       Igor & Nicole
     </h1>
 
-          {/* Subtítulo */}
-          <p className="text-xl md:text-2xl text-gray-600 italic mb-6 animate-fade-in">
-            Estamos nos casando!
-          </p>
+    <p className="text-2xl md:text-3xl text-black italic mb-4 drop-shadow-md">
+      Estamos prestes a viver o dia mais especial das nossas vidas!
+    </p>
 
-          {/* Linha decorativa */}
-          <div className="w-32 h-0.5 bg-[#d4af37] mx-auto mb-6 rounded-full"></div>
+    <div className="w-32 h-0.5 bg-[#d4af37] mx-auto mb-4 rounded-full"></div>
 
-          {/* Data */}
-          <p className="text-lg md:text-xl text-gray-700 mb-10 animate-fade-in font-light tracking-wide">
-            15 de Junho de 2025
-          </p>
-          {/* Botões */}
-    <div className="flex flex-col md:flex-row gap-4 justify-center animate-fade-in">
+    <p className="text-lg md:text-xl text-black mb-8 drop-shadow-md">
+      15 de Junho de 2025
+    </p>
+
+    {/* Botões */}
+    <div className="flex flex-col md:flex-row gap-4 justify-center">
       <Link to="/rsvp">
         <Button className="wedding-button border border-[#d4af37] text-[#d4af37] bg-transparent hover:bg-[#d4af37] hover:text-white transition-all duration-300">
           Confirme sua presença
@@ -85,40 +117,14 @@ useEffect(() => {
         <Button className="wedding-button border border-[#d4af37] text-[#d4af37] bg-transparent hover:bg-[#d4af37] hover:text-white transition-all duration-300">
           Manual do Convidado
         </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-{/* Countdown Section */}
-<div className="py-16 bg-black text-center text-white">
-  <div className="wedding-container">
-    <h2 className="font-dancing text-4xl md:text-5xl mb-6">Contagem Regressiva</h2>
-    <p className="text-xl md:text-2xl mb-8">Faltam apenas...</p>
-    <div className="flex justify-center gap-4 md:gap-6">
-      {[
-        { label: "Dias", value: timeLeft.days },
-        { label: "Horas", value: timeLeft.hours },
-        { label: "Minutos", value: timeLeft.minutes },
-        { label: "Segundos", value: timeLeft.seconds }
-      ].map((item, index) => (
-        <div
-          key={index}
-          className="bg-white bg-opacity-90 text-wedding-green rounded-lg shadow-md px-4 py-6 md:px-6 md:py-8 w-24 md:w-28"
-        >
-          <div className="text-3xl md:text-5xl font-bold font-mono">
-            {String(item.value).padStart(2, "0")}
-          </div>
-          <div className="text-sm md:text-base mt-2 font-semibold">{item.label}</div>
-        </div>
-      ))}
+      </Link>
     </div>
   </div>
 </div>
 
-<SaveTheDate />
-
+<RevealOnScroll>
+  <SaveTheDate />
+</RevealOnScroll>
 
       {/* About Section */}
       <div className="py-16 bg-white">
