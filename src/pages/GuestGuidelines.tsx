@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
+import { Description } from "@radix-ui/react-toast";
 
 const guidelines = [
   {
@@ -58,6 +59,11 @@ const guidelines = [
     id: 11,
     title: "Desligar o celular",
     description: "Pedimos que desligue ou coloque seu celular no modo silencioso durante a cerimônia para não atrapalhar os momentos especiais."
+  },
+  {
+    id: 12,
+    title: "Sem bebidas alcoólicas",
+    description: "É proibido trazer ou consumir bebidas alcoólicas no local."
   }
 ];
 

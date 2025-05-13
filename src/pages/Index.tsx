@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SaveTheDate from './SaveTheDate'; 
 import { RevealOnScroll } from "@/components/RevealOnScroll"; 
+import { MapPin } from "lucide-react";
 
 
 const Index = () => {
@@ -100,7 +101,16 @@ useEffect(() => {
     <p className="text-lg md:text-xl text-black mb-8 drop-shadow-md">
       15 de Junho de 2025
     </p>
-
+{/* Localização */}
+<a
+    href="https://maps.app.goo.gl/T7jsSDhvKy33yoof9"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 text-wedding-green hover:underline text-lg md:text-xl mb-8"
+  >
+    <MapPin className="w-5 h-5" />
+    Espaço Monteiro
+  </a>
     {/* Botões */}
     <div className="flex flex-col md:flex-row gap-4 justify-center">
       <Link to="/rsvp">
@@ -131,10 +141,14 @@ useEffect(() => {
         <div className="wedding-container">
           <h2 className="section-title">Nossa História</h2>
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-gray-700 mb-6">
-              Bem-vindos ao nosso site de casamento! Estamos muito felizes em compartilhar esse momento especial com vocês.
-              Nossa jornada juntos tem sido maravilhosa, e agora queremos celebrar nossa união com as pessoas que mais amamos.
-            </p>
+          <p className="text-gray-700 mb-6">
+            Nicole e Igor se conheceram ainda na infância ela com 10 anos, ele com 11. Aos 13 anos, Igor mudou-se para o Rio de Janeiro e retornou ao Piauí aos 19, com o intuito de visitar seus familiares. Após seis anos, o destino os reencontrou, e eles retomaram o contato como bons amigos.
+            <br /><br />
+            Igor voltou ao Rio sem imaginar que, em breve, retornaria novamente desta vez, para ficar definitivamente. No dia 13 de abril de 2021, iniciaram um relacionamento marcado por companheirismo, superações e amadurecimento.
+            <br /><br />
+            Depois de muitos momentos compartilhados, no dia 6 de julho de 2024, tomaram juntos a mais importante decisão de suas vidas. E logo mais você poderá prestigiar esse momento juntamente com eles..
+          </p>
+
             <Link to="/rsvp">
               <Button className="wedding-button">Participe da cerimônia</Button>
             </Link>
